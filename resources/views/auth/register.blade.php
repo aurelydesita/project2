@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; background: linear-gradient(to right, #ffe4ec, #fcd5ce);">
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; );">
     <div class="p-5 shadow-lg rounded-4" style="max-width: 420px; width: 100%; background-color: #fff0f5;">
         
         <h2 class="text-center fw-bold mb-1" style="color: #f78ca2;">✨ Daftar Akun Baru</h2>
