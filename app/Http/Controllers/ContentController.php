@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Content;
 use App\Models\Category;
 use App\Models\History;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -154,7 +155,12 @@ class ContentController extends Controller
             });
         })
         ->orderBy('viewed_at', 'desc')
-        ->get();
+        ->get()
+        ->map(function ($item) {
+            // convert ke waktu sekarang sesuai timezone
+            $item->viewed_at = Carbon::parse($item->viewed_at)->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s');
+            return $item;
+                });
 
     return view('content.riwayat', compact('histories'));
 }    
