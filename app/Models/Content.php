@@ -13,7 +13,8 @@ class Content extends Model
         'title',
         'body',
         'category_id',
-        'image'
+        'image',
+        'user_id'
     ];
 
     // ✅ Relasi ke kategori
@@ -21,4 +22,9 @@ class Content extends Model
     {
         return $this->belongsTo(Category::class);
 }
+
+  public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

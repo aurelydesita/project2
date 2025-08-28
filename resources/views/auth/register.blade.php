@@ -44,7 +44,7 @@
             <button type="submit"
                 class="btn w-100 rounded-pill py-2"
                 style="background: linear-gradient(to right, #f78ca2, #fcd5ce); color: white; font-weight: 600;">
-                🎀 Daftar Sekarang
+                 Daftar Sekarang
             </button>
 
             <p class="text-center mt-4 text-muted" style="font-size: 0.85rem;">

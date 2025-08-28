@@ -16,6 +16,7 @@ public function up(): void
         $table->string('title');
         $table->text('body');
         $table->foreignId('category_id')->constrained()->onDelete('cascade');
+        $table->foreignId('user_id')->constrained()->onDelete('cascade');
         $table->string('image')->nullable();
         $table->timestamps();
 });
