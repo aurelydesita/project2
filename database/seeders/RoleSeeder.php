@@ -10,13 +10,28 @@ class RoleSeeder extends Seeder
 {
     public function run(): void
     {
-        $admin = Role::firstOrCreate(['name' => 'admin']);
-        $user = Role::firstOrCreate(['name' => 'user']);
+        // bikin role
+        $admin = Role::firstOrCreate(['name' => 'admin', 'guard_name' => 'web']);
+        $editor = Role::firstOrCreate(['name' => 'editor', 'guard_name' => 'web']);
+        $viewer = Role::firstOrCreate(['name' => 'viewer', 'guard_name' => 'web']);
 
-        $manageContents = Permission::firstOrCreate(['name' => 'manage contents']);
-        $viewContents   = Permission::firstOrCreate(['name' => 'view contents']);
+        // kasih semua permission ke admin
+        $admin->syncPermissions(Permission::all());
 
-        $admin->givePermissionTo([$manageContents, $viewContents]);
-        $user->givePermissionTo([$viewContents]);
-}
+        // kasih permission terbatas ke editor
+        $editor->syncPermissions([
+            'kategori_read',
+            'kategori_write',
+            'kategori_create',
+            'konten_read',
+            'konten_write',
+            'konten_create',
+        ]);
+
+        // viewer hanya bisa read
+        $viewer->syncPermissions([
+            'kategori_read',
+            'konten_read',
+        ]);
+    }
 }

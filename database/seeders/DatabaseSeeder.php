@@ -2,22 +2,27 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // Pastikan semua permission sudah ada
+        $permissions = [
+            'kategori_read', 'kategori_write', 'kategori_create', 'kategori_delete',
+            'konten_read', 'konten_write', 'konten_create', 'konten_delete',
+            'user_read', 'user_write', 'user_create', 'user_delete',
+        ];
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        foreach ($permissions as $perm) {
+            Permission::firstOrCreate(['name' => $perm]);
+        }
+
+        // Buat role admin & kasih semua permission
+        $role = Role::firstOrCreate(['name' => 'admin']);
+        $role->syncPermissions(Permission::all());
     }
 }

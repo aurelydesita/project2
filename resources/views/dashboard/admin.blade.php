@@ -40,23 +40,21 @@
                 </div>
             </div>
         </div>
-    
- <!-- Riwayat -->
-<div class="col-md-4">
-    <div class="card shadow border-0 rounded-4 text-center" style="background-color:#e1f5fe;">
-        <div class="card-body py-4">
-            <h5 class="fw-bold" style="color:#0277bd;">📝 Riwayat</h5>
-            <a href="{{ route('admin.riwayat') }}" 
-               class="btn btn-sm mt-2 rounded-pill"
-               style="background-color:#0277bd; color:white;">
-                Lihat Riwayat
-            </a>
+            <!-- User -->
+        <div class="col-md-4">
+            <div class="card shadow border-0 rounded-4 text-center" style="background-color:#f3e5f5;">
+                <div class="card-body py-4">
+                    <h5 class="fw-bold" style="color:#6a1b9a;">👤 User</h5>
+                    <a href="{{ route('users.index') }}" 
+                       class="btn btn-sm mt-2 rounded-pill"
+                       style="background-color:#6a1b9a; color:white;">
+                        Kelola User
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-     
-   
+
 
     </div>
 

@@ -145,23 +145,5 @@ class ContentController extends Controller
  return view('content.show', compact('content'));
     }
 
-    // ✅ Admin melihat riwayat
-  public function riwayat()
-{
-    $histories = History::with(['user', 'content'])
-        ->whereHas('user', function($q) {
-            $q->whereHas('roles', function($role) {
-                $role->where('name', 'user'); // hanya role user
-            });
-        })
-        ->orderBy('viewed_at', 'desc')
-        ->get()
-        ->map(function ($item) {
-            // convert ke waktu sekarang sesuai timezone
-            $item->viewed_at = Carbon::parse($item->viewed_at)->setTimezone('Asia/Jakarta')->format('Y-m-d H:i:s');
-            return $item;
-                });
 
-    return view('content.riwayat', compact('histories'));
-}    
 }

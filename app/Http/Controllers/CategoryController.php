@@ -7,6 +7,16 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
+
+    public function __construct()
+    {
+    $this->middleware('auth');
+    $this->middleware('permission:kategori_read')->only('index');
+    $this->middleware('permission:kategori_create')->only('store');
+    $this->middleware('permission:kategori_write')->only(['edit','update']);
+    $this->middleware('permission:kategori_delete')->only('destroy');
+    }
+
     public function index()
     {
         $categories = Category::all();
@@ -42,4 +52,6 @@ class CategoryController extends Controller
         $category->delete();
         return redirect()->route('categories.index')->with('success', 'Kategori makanan berhasil dihapus.');
     }
+
+
 }
