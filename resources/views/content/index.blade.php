@@ -7,7 +7,7 @@
         <h2 class="text-center mb-4" style="color: #f06292; font-family: 'Poppins', sans-serif;">
             🍰 Daftar Menu Makanan Lezat
         </h2>
-
+        @can('konten_create')
         <div class="text-center mb-3">
             <a href="{{ route('contents.create') }}"
                class="btn"
@@ -15,7 +15,7 @@
                + Tambah Makanan 🍽️
             </a>
         </div>
-
+        @endcan
         <div class="table-responsive">
             <table class="table text-center align-middle" style="background-color: white; border-radius: 15px; overflow: hidden;">
                 <thead style="background-color: #fff0f4;">
@@ -41,11 +41,14 @@
                             @endif
                         </td>
                         <td>
+                            @can('konten_write')
                             <a href="{{ route('contents.edit', $content) }}"
                                class="btn btn-sm"
                                style="background-color: #ffd6dc; color: #d6336c; border-radius: 12px;">
                                ✏️ Edit
                             </a>
+                            @endcan
+                            @can('konten_delete')
                             <form action="{{ route('contents.destroy', $content) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')
@@ -55,6 +58,7 @@
                                         🗑️ Hapus
                                 </button>
                             </form>
+                            @endcan
                         </td>
                     </tr>
                     @endforeach

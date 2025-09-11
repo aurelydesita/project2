@@ -6,10 +6,16 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\UserController;
+use App\Exports\KontenExport;
+use App\Exports\KategoriExport;
+use App\Exports\UserExport;
+use App\Exports\MultiSheetExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 Route::get('/', [ContentController::class, 'landing'])->name('landing');
 
-// ======================= CATEGORY =======================
+//  CATEGORY 
 Route::middleware(['auth'])->group(function () {
     Route::get('categories', [CategoryController::class, 'index'])
         ->middleware('permission:kategori_read')->name('categories.index');
@@ -28,9 +34,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('categories/{category}', [CategoryController::class, 'destroy'])
         ->middleware('permission:kategori_delete')->name('categories.destroy');
+
 });
 
-// ======================= CONTENT =======================
+// CONTENT 
 Route::middleware(['auth'])->group(function () {
     Route::get('contents', [ContentController::class, 'index'])
         ->middleware('permission:konten_read')->name('contents.index');
@@ -54,7 +61,7 @@ Route::middleware(['auth'])->group(function () {
 // route show (bisa dibuka semua yg login / public, sesuai kebutuhan)
 Route::get('/contents/{id}', [ContentController::class, 'show'])->name('contents.show');
 
-// ======================= AUTH =======================
+//  AUTH 
 Route::get('/login',    [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login',   [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
@@ -65,7 +72,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout',   [AuthController::class, 'logout'])->name('logout');
 });
 
-// ======================= DASHBOARD =======================
+//  DASHBOARD 
 Route::middleware(['auth', 'role:admin'])->get('/admin/dashboard', function () {
     return view('dashboard.admin');
 })->name('admin.dashboard');
@@ -74,7 +81,7 @@ Route::middleware(['auth', 'role:user'])->get('/user/dashboard', function () {
     return view('dashboard.user');
 })->name('user.dashboard');
 
-// ======================= USER MANAGEMENT =======================
+//  USER MANAGEMENT 
 Route::middleware(['auth','role:admin'])->group(function () {
     Route::get('/admin/users', [UserController::class,'index'])->name('users.index');  
     Route::put('/admin/users/{user}/permissions', [UserController::class,'updateRoles'])
@@ -82,4 +89,31 @@ Route::middleware(['auth','role:admin'])->group(function () {
     Route::get('/admin/users/{user}/permissions/edit', [UserController::class,'edit'])
         ->name('users.permissions.edit');
     Route::resource('users', UserController::class);    
+
+Route::middleware(['role:admin'])->group(function () {
+
+    // Export konten
+    Route::get('/export/konten', function () {
+        return Excel::download(new KontenExport, 'konten.xlsx');
+    })->name('export.konten');
+
+    // Export kategori
+    Route::get('/export/kategori', function () {
+        return Excel::download(new KategoriExport, 'kategori.xlsx');
+    })->name('export.kategori');
+
+    // Export user
+    Route::get('/export/user', function () {
+        return Excel::download(new UserExport, 'user.xlsx');
+    })->name('export.user');
+
+    // Export semua (multi sheet)
+    Route::get('/export/all', function () {
+        return Excel::download(new MultiSheetExport, 'data_semua.xlsx');
+    })->name('export.all');
+
 });
+
+});
+
+

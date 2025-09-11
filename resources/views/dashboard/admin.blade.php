@@ -53,7 +53,19 @@
                 </div>
             </div>
         </div>
-
+        <div class="col-md-4">
+            <div class="card shadow border-0 rounded-4 text-center" style="background-color:#fff3e0;">
+                <div class="card-body py-4">
+                    <h5 class="fw-bold" style="color:#ef6c00;">📊 Export Data</h5>
+                    <a href="{{ route('export.all') }}" 
+                    class="btn btn-sm mt-2 rounded-pill"
+                    style="background-color:#ef6c00; color:white;">
+                        Download Excel
+                    </a>
+                    <p class="text-muted mt-2 small">Unduh semua data (Konten, Kategori, User).</p>
+                </div>
+            </div>
+        </div>
 
 
     </div>
