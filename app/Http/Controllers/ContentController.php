@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Content;
 use App\Models\Category;
-use App\Models\History;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -136,11 +135,7 @@ class ContentController extends Controller
         $content = Content::with('category')->findOrFail($id);
 
      if (auth()->user()->hasRole('user')) {
-    History::create([
-        'user_id' => auth()->id(),
-        'content_id' => $content->id,
-        'viewed_at' => now(),
-    ]);
+
 }
  return view('content.show', compact('content'));
     }
