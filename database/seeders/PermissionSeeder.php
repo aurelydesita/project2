@@ -13,22 +13,33 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
+            // kategori
             'kategori_read',
             'kategori_write',
             'kategori_create',
             'kategori_delete',
+            'kategori_export',
+
+            // konten
             'konten_read',
             'konten_write',
             'konten_create',
             'konten_delete',
+            'konten_export',
+
+            // user
             'user_read',
-            'user_create',
             'user_write',
+            'user_create',
             'user_delete',
+            'user_export',
         ];
 
         foreach ($permissions as $permission) {
-            Permission::firstOrCreate(['name' => $permission, 'guard_name' => 'web']);
+            Permission::firstOrCreate([
+                'name'       => $permission,
+                'guard_name' => 'web',
+            ]);
         }
     }
 }

@@ -23,9 +23,11 @@ class RoleSeeder extends Seeder
             'kategori_read',
             'kategori_write',
             'kategori_create',
+            'kategori_export',   
             'konten_read',
             'konten_write',
             'konten_create',
+            'konten_export',
         ]);
 
         // viewer hanya bisa read

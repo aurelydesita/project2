@@ -5,8 +5,10 @@ namespace App\Exports;
 use App\Models\Category;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithTitle;
 
-class KategoriExport implements FromCollection, WithHeadings
+class KategoriExport implements FromCollection, WithHeadings,WithTitle
+
 {
     public function collection()
     {
@@ -17,4 +19,10 @@ class KategoriExport implements FromCollection, WithHeadings
     {
         return ['ID', 'Nama Kategori', 'Tanggal Dibuat'];
     }
+
+       public function title(): string
+    {
+        return 'Kategori'; // nama sheet
+}
+
 }

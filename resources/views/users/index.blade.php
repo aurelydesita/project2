@@ -65,7 +65,7 @@
 <div class="text-center mt-5">
     <a href="{{ auth()->user()->hasRole('admin') ? route('admin.dashboard') : route('user.dashboard') }}"
        class="btn px-4 py-2 rounded-pill shadow-sm"
-       style="background-color:#d6336c; color:white;">
+       style="background-color:#d6336c ; color:white;">
         🏠 Kembali ke Dashboard
     </a>
 </div>

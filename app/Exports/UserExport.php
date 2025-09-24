@@ -5,8 +5,10 @@ namespace App\Exports;
 use App\Models\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithTitle;
 
-class UserExport implements FromCollection, WithHeadings
+class UserExport implements FromCollection, WithHeadings,WithTitle
+
 {
     public function collection()
     {
@@ -16,5 +18,11 @@ class UserExport implements FromCollection, WithHeadings
     public function headings(): array
     {
         return ['ID', 'Nama', 'Email', 'Tanggal Dibuat'];
-}
+    }
+
+       public function title(): string
+    {
+        return 'User'; // nama sheet
+    }
+
 }

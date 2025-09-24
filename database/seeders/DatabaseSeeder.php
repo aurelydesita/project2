@@ -12,8 +12,8 @@ class DatabaseSeeder extends Seeder
     {
         // Pastikan semua permission sudah ada
         $permissions = [
-            'kategori_read', 'kategori_write', 'kategori_create', 'kategori_delete',
-            'konten_read', 'konten_write', 'konten_create', 'konten_delete',
+            'kategori_read', 'kategori_write', 'kategori_create', 'kategori_delete','kategori_export',
+            'konten_read', 'konten_write', 'konten_create', 'konten_delete','konten_export',
             'user_read', 'user_write', 'user_create', 'user_delete',
         ];
 
