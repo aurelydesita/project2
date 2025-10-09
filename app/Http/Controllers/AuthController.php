@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use App\Models\User;
+use App\Mail\WelcomeMail;
 
 class AuthController extends Controller
 {
@@ -70,6 +72,10 @@ class AuthController extends Controller
         // kasih role default user
         $user->assignRole('user');
 
+        // 💌 kirim email ke Mailtrap
+        Mail::to($user->email)->send(new WelcomeMail($user));
+
+        // login langsung setelah register
         Auth::login($user);
 
         return redirect()->route('user.dashboard');
@@ -83,5 +89,5 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('landing');
-}
+    }
 }

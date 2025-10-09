@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use App\Mail\WelcomeMail;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -32,27 +34,29 @@ class UserController extends Controller
         return view('users.create', compact('roles'));
     }
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'name'     => 'required|string|max:100',
-            'email'    => 'required|email|unique:users',
-            'password' => 'required|min:6',
-            'roles'    => 'array'
-        ]);
+public function store(Request $request)
+{
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users',
+        'password' => 'required|string|confirmed|min:8',
+    ]);
 
-        $user = User::create([
-            'name'     => $request->name,
-            'email'    => $request->email,
-            'password' => bcrypt($request->password),
-        ]);
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => bcrypt($request->password),
+    ]);
 
-        if ($request->roles) {
-            $user->syncRoles($request->roles);
-        }
+    // Kirim email ke Mailtrap
+    Mail::to($user->email)->send(new WelcomeMail($user));
 
-        return redirect()->route('users.index')->with('success', 'User berhasil ditambahkan.');
-    }
+    Auth::login($user);
+
+    return redirect()->route('user.dashboard')->with('success', 'Registrasi berhasil! Selamat datang, ' . $user->name.'!');
+    
+}
+
 
     public function destroy(User $user)
     {
